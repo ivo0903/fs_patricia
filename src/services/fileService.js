@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -9,7 +9,11 @@ const dataFilePath = path.join(__dirname, '../data/data.json')
 
 export const createFile = async(data) => {
     try {
-        await fs.writeFile(dataFilePath, JSON.stringify(data), 'utf-8');
+        await fs.mkdir(path.dirname(dataFilePath), { recursive: true })
+
+        await fs.writeFile(dataFilePath, JSON.stringify(data), 'utf-8', (err) => {
+            throw new Error(`Error al crear el archivo: ${err}`)
+        });
     } catch (error) {
         console.error('Error al crear o guardar el archivo', error)
     }

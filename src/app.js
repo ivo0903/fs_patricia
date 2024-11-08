@@ -5,6 +5,9 @@ import fileRouter from './routes/router.js'
 const app = express()
 const PORT = 3000
 
+//Middleware para parsear datos JSON y datos URL-encode
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 
 
 app.use('/api/v1', fileRouter)
